@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>BloodVoyagerS Visualizer</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="author" content="Regine Wendt and Chris Deter">
+		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+		<script src="js/three.min.js"></script>
+		<script src="js/papaparse.min.js"></script>
+		<script src="js/TrackballControls.js"></script>
+		<script src="js/WebGL.js"></script>
+		<script src="js/jquery-3.4.0.min.js"></script>
+		<script type="x-shader/x-vertex" id="vertexshader">
+		    attribute vec3 vertColor;
+		    varying vec3 vColor;
+			void main() {
+				vColor = vertColor;
+				vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+				gl_PointSize = 4.0;
+				// gl_PointSize = scale * ( 300.0 / - mvPosition.z );
+				gl_Position = projectionMatrix * mvPosition;
+			}
+		</script>
+		<script type="x-shader/x-fragment" id="fragmentshader">
+			varying vec3 vColor;
+			void main() {
+				gl_FragColor = vec4( vColor, 1.0 );
+				if ( length( gl_PointCoord - vec2( 0.5, 0.5 ) ) > 0.475 ) discard;
+				gl_FragColor = vec4( vColor, 1.0 );
+			}
+		</script>
+		<script src="js/vasculature.js"></script>
+		<script src="js/view.js"></script>
+		<script src="js/datamodel.js"></script>
+		<script src="js/main.js"></script>
+	</head>
+	<body>
+		<div id="nav">
+			<div class="container clearfix">
+				<div class="float maxwidthcontainer">
+					<input type="file" id="datainput" name="data" accept=".csv">
+					Actual File: <span class="file-info">none</span><br/>
+					Nanobots: <span id="nanocount">0</span>
+				</div>
+				<div class="txtright"><a id="upload" class="button" href="#">Change File</a></div>
+			</div>
+			<div class="container txtcenter">
+				<label for="viewslider">Vasculature visibility:</label>
+				<input type="range" min="0" max="5" class="slider" id="viewslider"><br/>
+				Step: <span id="step">0</span>/<span id="maxstep">0</span><span id="load">*</span><br/>
+				<img id="back" class="stepper" src="img/arrow-left-bold-circle.png" alt="left" width="32" height="32" />
+				<span class="tooltip" data-tooltip="You can step manually or input a specific step in here">
+					<input id="cstep" type="text" name="step" value="0" size="5" placeholder="1"/>
+				</span>
+				<img id="next" class="stepper" src="img/arrow-right-bold-circle.png" alt="left" width="32" height="32" /><br/>
+				<label for="speedslider">Animation Speed:</label>
+				<input type="range" min="0" max="15" class="slider" id="speedslider">
+			</div>
+			<div id="scale" class="container txtcenter">
+				<div id="heatmaptext" style=""></div>
+				<div id="heatmaplegend" style=""></div>
+				<label for="heatslider">Heatmap scale:</label>
+				<input type="range" min="1" max="200" class="slider" id="heatslider">
+			</div>
+			<div class="txtcenter">
+				<a class="button" href="#" id="openhelp">Open Help</a>
+			</div>
+			<div id="help">
+				<div class="txtcenter">Moving Simulation:</div>
+				<img src="img/left-click.png" alt="left-click" width="32" height="32" /> to rotate body around its own axis<br/>
+				<img src="img/mouse-scrolling.png" alt="mouse scrolling" width="32" height="32" /> zoom into animation<br/>
+				<img src="img/right-click.png" alt="right-click" width="32" height="32" /> to move body around <br/>
+				<div class="float"><a href="help.html">Documentation</a></div>
+				<div class="txtright"><span class="tooltip" data-tooltip="JQuery v3.4.0 - Papa Parse 4.6 - three.js 0.103.0">V. 0.2.3</span></div>
+			</div>
+		</div>
+		<div id="anim"></div>
+	</body>
+</html>

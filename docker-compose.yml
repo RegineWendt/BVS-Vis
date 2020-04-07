@@ -1,0 +1,28 @@
+version: '3'
+services:
+  # NS-3 software for CSV creation
+  ns3:
+    image: bloodvoyagers:latest
+    build:
+      context: .
+      args:
+        NS3VERSION: 3.29
+    # Configuration of runtime parameter for CSV creation
+    env_file: 
+      - ./config-blood-voyager.env
+    volumes:
+     - data-volume:/var/www
+  # Web based GUI for visualisation of results
+  visualizer:
+    # based on webserver image
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      # files for website
+      - ./visualizer:/usr/share/nginx/html
+      # include CSV Data File Volume
+      - data-volume:/usr/share/nginx/html/csv
+volumes:
+     # shared volume to exchange CSV Data Files
+     data-volume: 

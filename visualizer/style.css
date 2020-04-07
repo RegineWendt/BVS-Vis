@@ -1,0 +1,189 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    font-size:16px;
+    text-align:center;
+    font-weight: bold;
+}
+
+img {
+   vertical-align: middle;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+#help {
+    display:none;
+    padding: 10px;
+}
+
+#anim {
+    width: 100%;
+    height: 90%;
+    position: relative;
+}
+
+#nav {
+    text-align:left;
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    width: 330px;
+    margin: 10px;
+    border: 3px solid #ccc;
+    z-index:2;
+}
+
+#heatmaptext {
+    margin: auto;
+    width: 240px;
+    text-align:justify;
+    text-align-last: justify;
+}
+
+#scale {
+    display:none;
+}
+
+#heatmaplegend{
+    margin: auto;
+    width:240px;
+    height:20px;
+    background: linear-gradient(to right, hsl(240, 100%, 50%),hsl(180, 100%, 50%), hsl(120, 100%, 50%), hsl(60, 100%, 50%), hsl(0, 100%, 50%));
+}
+
+.button {
+    background-color: #e7e7e7;
+    margin: 5px;
+    border: none;
+    color: black;
+    padding: 2px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #fff;
+}
+
+.container {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.maxwidthcontainer{
+    max-width: 200px;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+.txtcenter{
+    text-align:center;
+}
+
+.txtright{
+    text-align:right;
+}
+
+.float {
+    float: left;
+}
+
+.stepper {
+    border-radius: 100%;
+}
+
+.stepper:hover {
+    background-color: #fff;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 5px 5px;
+    border: 1px solid #ccc;
+    border-top: none;
+    text-align: left;
+}
+
+/* Slider CSS*/
+.slider {
+    -webkit-appearance: none;
+    margin: 2%;
+    width: 97%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #f1f1f1;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #f1f1f1;
+    cursor: pointer;
+}
+/*Tooltip CSS */
+.tooltip {
+    position: relative;
+    margin: 2px;
+}
+
+.tooltip:before,
+.tooltip:after {
+    position: absolute;
+    content: '';
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.tooltip:before {
+    border-width: 10px 8px 0 8px;
+    border-style: solid;
+    border-color: #f1f1f1 transparent transparent transparent;
+    top: -15px;
+    transform: translateY(20px);
+}
+
+.tooltip:after {
+    content: attr(data-tooltip);
+    background: #f1f1f1;
+    width: 180px;
+    height: 40px;
+    font-size: 13px;
+    font-weight: 300;
+    top: -75px;
+    left: -10px;
+    padding: 10px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transform: translateY(20px);
+}
+
+.tooltip:hover::before,
+.tooltip:hover::after {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+/* Tooltip CSS Ende*/
