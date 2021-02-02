@@ -82,12 +82,13 @@ function Datamodel(csvLoader, scaling, viewData){
             }
             // Insert new row of data
             if (this.heatmap){
-                this.data[this.maxTimesteps][this.dataloadcounter] = {x: elem[1], y: elem[2], z: elem[3],count:elem[0]};
+                this.data[this.maxTimesteps][this.dataloadcounter] = {x: elem[1], y: elem[2], z: elem[3], receivedMessage: elem[7], count:elem[0]};
             } else{
-                this.data[this.maxTimesteps][this.dataloadcounter] = {x: elem[1], y: elem[2], z: elem[3]};
+                this.data[this.maxTimesteps][this.dataloadcounter] = {x: elem[1], y: elem[2], z: elem[3], receivedMessage: elem[7]};
             }
             this.dataloadcounter++;
         }
+		//console.log(this.data);
         this.updateGui();
         // Update MaxStep
         let ctrlElem = document.querySelector('#maxstep');
@@ -131,13 +132,19 @@ function Datamodel(csvLoader, scaling, viewData){
     this.refresh = function(cycle) {
         if (cycle >= 0 && cycle < this.data.length) {
             let localData = this.data[cycle];
+			//console.log(localData);
             let positions = [];
             let colors = [];
             // setting Nanobot coordinates
             for (let i = 0; i < localData.length; i++) {
                 positions.push(localData[i].x * scaling, localData[i].y * scaling, localData[i].z * scaling); // x, y, z
-                let color = viewData.getThreeColor(this.heatmap ? localData[i].count / this.heatmapscale : localData[i].z > 0? 1: 0);
-                colors.push(color.r, color.g, color.b);
+				if (localData[i].receivedMessage == 0) {
+	                let color = viewData.getThreeColor(this.heatmap ? localData[i].count / this.heatmapscale : localData[i].z > 0? 1: 0);
+					colors.push(color.r, color.g, color.b);
+				} else {
+					let color = new THREE.Color("rgb(0, 240, 0)");
+					colors.push(color.r, color.g, color.b);
+				}
             }
             viewData.insertNewData(positions, colors);
             if (this.actualDisplayedTimestep + (this.timestepBufferSize * 2) > this.maxTimesteps && !csvLoader.isParsingDone) {
